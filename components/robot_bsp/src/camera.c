@@ -31,12 +31,12 @@ static camera_config_t s_camera_config = {
     .ledc_timer = LEDC_TIMER_0,
     .ledc_channel = LEDC_CHANNEL_0,
 
-    .pixel_format = PIXFORMAT_RGB565,
-    .frame_size = FRAMESIZE_240X240,
-    .jpeg_quality = 12,
-    .fb_count = 2,
+    .pixel_format = PIXFORMAT_JPEG,
+    .frame_size = FRAMESIZE_QVGA,
+    .jpeg_quality = 10,
+    .fb_count = 1,
     .fb_location = CAMERA_FB_IN_PSRAM,
-    .grab_mode = CAMERA_GRAB_WHEN_EMPTY,
+    .grab_mode = CAMERA_GRAB_LATEST,
 };
 
 #endif
@@ -52,7 +52,7 @@ esp_err_t bsp_camera_init(void)
         return err;
     }
 
-    ESP_LOGI(TAG, "摄像头初始化完成 (240x240 RGB565)");
+    ESP_LOGI(TAG, "摄像头初始化完成 (QVGA JPEG)");
     return ESP_OK;
 #else
     ESP_LOGE(TAG, "当前芯片不支持摄像头");

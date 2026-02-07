@@ -75,7 +75,7 @@ esp_lcd_panel_handle_t bsp_display_init(void)
     esp_lcd_panel_handle_t panel_handle = NULL;
     esp_lcd_panel_dev_config_t panel_config = {
         .reset_gpio_num = BOARD_LCD_RST, // 之前在 board_config.h 里定义为 NC (-1)
-        .rgb_ele_order = LCD_RGB_ELEMENT_ORDER_RGB, // 像素顺序 RGB
+        .rgb_ele_order = LCD_RGB_ELEMENT_ORDER_RGB,
         .bits_per_pixel = 16,            // RGB565 格式
     };
     ESP_ERROR_CHECK(esp_lcd_new_panel_st7789(io_handle, &panel_config, &panel_handle));
@@ -101,4 +101,14 @@ esp_lcd_panel_handle_t bsp_display_init(void)
     bsp_display_backlight(true);
 
     return panel_handle;
+}
+
+esp_err_t bsp_display_draw_bitmap(esp_lcd_panel_handle_t panel,
+                                  int x_start, int y_start, int x_end, int y_end,
+                                  const void *color_data)
+{
+    if (panel == NULL || color_data == NULL) {
+        return ESP_ERR_INVALID_ARG;
+    }
+    return esp_lcd_panel_draw_bitmap(panel, x_start, y_start, x_end, y_end, color_data);
 }
